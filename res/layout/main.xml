@@ -5,12 +5,6 @@
               android:layout_height="fill_parent"
               android:weightSum="1">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="WiFi Info"
-        android:id="@+id/tvWifiInfo"/>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,20 +13,28 @@
         android:id="@+id/bScan"/>
 
     <TextView
+        android:scrollbars="vertical"
+        android:maxLines="30"
         android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:text="Accl"
-        android:id="@+id/accelerometer"
+        android:layout_height="194dp"
+        android:text="New Text"
+        android:id="@+id/tvScan"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:onClick="update"
+        android:id="@+id/bUpdate"/>
 
     <TextView
         android:scrollbars="vertical"
         android:maxLines="30"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New Text"
-        android:id="@+id/textView"
-        />
+        android:text="Updated Values"
+        android:id="@+id/tvUpdated"/>
 
 
 </LinearLayout>
