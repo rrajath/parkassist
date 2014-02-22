@@ -24,7 +24,7 @@ public class MyActivity extends Activity {
      */
 
     TextView tvScans;
-    TextView tvUpdated;
+    TextView tvMean;
     TextView tvScansCompleted;
     WifiManager wifiManager;
     WifiInfo info;
@@ -89,6 +89,7 @@ public class MyActivity extends Activity {
     }
 
     public void startScan(View view) {
+        ssCounter = 0;
         startUpdates();
     }
 
@@ -108,11 +109,20 @@ public class MyActivity extends Activity {
                 fp.getRss() + "\n";
 //        break;
     }
+        tvScans = (TextView) findViewById(id.tvScan);
         tvScans.setText(str);
     }
 
-    public void exportDB(View view) {
-        datasource.exportDB();
+    public void mean(View view) {
+        HashMap<String, Double> hmMean = new HashMap<String, Double>();
+        hmMean = datasource.getMeanValue(ssCounter);
+        String meanValues = "";
+        for (Map.Entry<String, Double> entry : hmMean.entrySet()) {
+            meanValues += entry.getKey() + " | " + entry.getValue() + "\n";
+        }
+        tvMean = (TextView) findViewById(id.tvMean);
+        tvScans.setMovementMethod(new ScrollingMovementMethod());
+        tvMean.setText(meanValues);
     }
     public void clearDB(View view) {
         datasource.deleteFingerprint();
@@ -160,34 +170,4 @@ public class MyActivity extends Activity {
     public synchronized void stopUpdates() {
         mHandler.removeCallbacks(statusChecker);
     }
-    // Avg of values will be taken and HashMap will be replaced with the final value.
-    /*public void update() {
-        String output = "Final Output:\n";
-
-        // Iterate through the RSS HashMap to take the average value of RSSs from surrounding
-        // access points
-        for (Map.Entry<String, Integer> entry : hRss.entrySet()) {
-            String key = entry.getKey();
-            Integer value = entry.getValue();
-            value = value/ssCounter;
-            hRss.put(key, value);
-
-            output += key + " : " + value + "\n";
-        }
-
-        // Increment the ref point counter so that the vector of RSS values are mapped to the
-        // corresponding access points
-        rpCounter++;
-
-        // Reset the signal strength counter to get new set of RSS values for the next ref point
-        ssCounter = 0;
-
-        // Add ref points to a hashmap as (ref_pt_no, hRss) and clear the old hRss hashmap
-        hRefPoints.put(rpCounter, hRss);
-        hRss.clear();
-
-        tvUpdated = (TextView)findViewById(id.tvUpdated);
-        tvUpdated.setMovementMethod(new ScrollingMovementMethod());
-        tvUpdated.setText(output);
-    }*/
 }

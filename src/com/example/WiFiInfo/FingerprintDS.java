@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class FingerprintDS {
 
     public boolean deleteFingerprint() //This will delete all rows
     {
+        db.rawQuery("DELETE FROM SQLITE_SEQUENCE WHERE NAME='" + DatabaseHelper.DATABASE_TABLE + "'", null);
         return db.delete(DatabaseHelper.DATABASE_TABLE, null, null) > 0;
     }
 
@@ -77,16 +79,21 @@ public class FingerprintDS {
         return mCursor;
     }
 
-    public float getMeanValue() {
-        String countQuery = "SELECT RSS FROM " + DatabaseHelper.DATABASE_TABLE + " GROUP BY BSSID";
+    public HashMap<String, Double> getMeanValue(int scanCount) {
+        HashMap<String, Double> hmMean = new HashMap<String, Double>();
+
+        String countQuery = "SELECT BSSID, SSID, AVG(RSS) FROM " + DatabaseHelper.DATABASE_TABLE + " GROUP BY BSSID " +
+                "ORDER BY AVG(RSS) DESC";
         Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            hmMean.put(cursor.getString(0) + " | " + cursor.getString(1), cursor.getDouble(2));
+            cursor.moveToNext();
+        }
         cursor.close();
 
-        String meanQuery = "SELECT SUM(RSS) FROM " + DatabaseHelper.DATABASE_TABLE;
-        cursor = db.rawQuery(meanQuery, null);
-        cursor.close();
-
-        return cursor.getCount();
+        return hmMean;
     }
 
     public long insertFingerprint(Fingerprint fp) {

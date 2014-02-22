@@ -45,7 +45,7 @@
         android:scrollbars="vertical"
         android:maxLines="30"
         android:layout_width="match_parent"
-        android:layout_height="194dp"
+        android:layout_height="95dp"
         android:text="New Text"
         android:id="@+id/tvScan"
         />
@@ -60,16 +60,24 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Export"
-        android:onClick="exportDB"
-        android:id="@+id/bExport"/>
+        android:text="Mean"
+        android:onClick="mean"
+        android:id="@+id/bMean"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Mean: "
-        android:id="@+id/tvMean"/>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:weightSum="1">
+
+        <TextView
+            android:scrollbars="vertical"
+            android:maxLines="30"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Mean: "
+            android:id="@+id/tvMean"/>
+    </ScrollView>
 
 
 </LinearLayout>
