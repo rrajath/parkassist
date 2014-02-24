@@ -8,6 +8,7 @@ public class Fingerprint {
     private String bssid;
     private String ssid;
     private int rss;
+    private String refPoint;
 
     public int getId() {
         return id;
@@ -40,4 +41,7 @@ public class Fingerprint {
     public void setRss(int rss) {
         this.rss = rss;
     }
+
+    public void setRefPoint(String ref){this.refPoint=ref;}
+    public String getRefPoint(){return refPoint;}
 }

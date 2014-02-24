@@ -29,6 +29,7 @@ public class MyActivity extends Activity {
     WifiManager wifiManager;
     WifiInfo info;
     String ssid;
+    String refPoint;
     HashMap<String, Integer> hRss = new HashMap<String, Integer>();
     HashMap<Integer, HashMap> hRefPoints = new HashMap<Integer, HashMap>();
     Fingerprint fingerprint;
@@ -48,9 +49,11 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(layout.main);
 
+        refPoint = getIntent().getExtras().getString("thepoint");
         datasource = new FingerprintDS(this);
         datasource.open();
 
+        datasource.refreshDB();
         // Start the wifi scan
         mHandler = new Handler();
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -74,6 +77,7 @@ public class MyActivity extends Activity {
                     fingerprint.setSsid(scanResult.SSID);
                     fingerprint.setBssid(scanResult.BSSID);
                     fingerprint.setRss(scanResult.level);
+                    fingerprint.setRefPoint(refPoint);
 
                     datasource.insertFingerprint(fingerprint);
                 }
@@ -106,7 +110,7 @@ public class MyActivity extends Activity {
                 fp.getId() + " | " +
                 fp.getBssid() + " | " +
                 fp.getSsid() + " | " +
-                fp.getRss() + "\n";
+                fp.getRss() + "|" + fp.getRefPoint()+"\n";
 //        break;
     }
         tvScans = (TextView) findViewById(id.tvScan);
