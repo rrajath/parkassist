@@ -3,7 +3,6 @@ package com.example.WiFiInfo;
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +17,7 @@ import java.util.Map;
 import static com.example.WiFiInfo.R.id;
 import static com.example.WiFiInfo.R.layout;
 
-public class MyActivity extends Activity {
+public class ScanActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
@@ -27,26 +26,21 @@ public class MyActivity extends Activity {
     TextView tvMean;
     TextView tvScansCompleted;
     WifiManager wifiManager;
-    WifiInfo info;
     String ssid;
     HashMap<String, Integer> hRss = new HashMap<String, Integer>();
-    HashMap<Integer, HashMap> hRefPoints = new HashMap<Integer, HashMap>();
     Fingerprint fingerprint;
     List scanResultsList;
     int ssCounter;
-    int rpCounter;
     int sum;
     int mInterval = 1000;
     Handler mHandler = new Handler();
-    int i;
-    long mStartTime;
     Runnable statusChecker;
     FingerprintDS datasource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.main);
+        setContentView(layout.scanbox);
 
         datasource = new FingerprintDS(this);
         datasource.open();
@@ -95,7 +89,7 @@ public class MyActivity extends Activity {
 
     public void stopScan(View view) {
         stopUpdates();
-        List<Fingerprint> fingerprintList = datasource.getAllFingerprints();
+/*        List<Fingerprint> fingerprintList = datasource.getAllFingerprints();
         String str = "";
         if (fingerprintList.size() == 0) {
             str = "No values found!";
@@ -107,26 +101,30 @@ public class MyActivity extends Activity {
                 fp.getBssid() + " | " +
                 fp.getSsid() + " | " +
                 fp.getRss() + "\n";
-//        break;
     }
         tvScans = (TextView) findViewById(id.tvScan);
-        tvScans.setText(str);
+        tvScans.setText(str);*/
     }
 
     public void mean(View view) {
-        HashMap<String, Double> hmMean = new HashMap<String, Double>();
+        HashMap<String, Double> hmMean;
         hmMean = datasource.getMeanValue(ssCounter);
-        String meanValues = "";
+        StringBuilder meanValues = new StringBuilder();
         for (Map.Entry<String, Double> entry : hmMean.entrySet()) {
-            meanValues += entry.getKey() + " | " + entry.getValue() + "\n";
+//            meanValues += entry.getKey() + " | " + entry.getValue() + "\n";
+            meanValues.append(entry.getKey()).append(" | ").append(entry.getValue()).append("\n");
         }
         tvMean = (TextView) findViewById(id.tvMean);
         tvScans.setMovementMethod(new ScrollingMovementMethod());
         tvMean.setText(meanValues);
     }
+
     public void clearDB(View view) {
         datasource.deleteFingerprint();
+        tvScans = (TextView) findViewById(id.tvScan);
+        tvScans.setText("");
     }
+
     public void scan(View view) {
         // Every time the scan button is pressed, the RSS value for each AP will be captured
         // and added to the corresponding array of size 4

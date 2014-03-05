@@ -83,7 +83,7 @@ public class FingerprintDS {
         HashMap<String, Double> hmMean = new HashMap<String, Double>();
 
         String countQuery = "SELECT BSSID, SSID, AVG(RSS) FROM " + DatabaseHelper.DATABASE_TABLE + " GROUP BY BSSID " +
-                "ORDER BY AVG(RSS) DESC";
+                "ORDER BY 3 DESC";
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.moveToFirst();
 
