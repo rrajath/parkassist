@@ -6,32 +6,19 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.WiFiInfo.R.id;
 import static com.example.WiFiInfo.R.layout;
 
 public class ScanActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
-
-    TextView tvScans;
-    TextView tvMean;
-    TextView tvScansCompleted;
     WifiManager wifiManager;
-    String ssid;
-    HashMap<String, Integer> hRss = new HashMap<String, Integer>();
-    Fingerprint fingerprint;
+    HashMap<String, Integer> hmFingerprint = new HashMap<String, Integer>();
     List scanResultsList;
-    int ssCounter;
-    int sum;
+    int scanCounter;
     int mInterval = 1000;
     Handler mHandler = new Handler();
     Runnable statusChecker;
@@ -57,94 +44,68 @@ public class ScanActivity extends Activity {
                 // List of access points scanned
                 scanResultsList = wifiManager.getScanResults();
 
-                // Capture SSID
-                ssid = "";
-                String scans = "";
+                // Initialize hmFingerprint everytime the Scan button is pressed
+                hmFingerprint = new HashMap<String, Integer>();
 
                 // Iterate through the scan results and add new RSS values to hashmap
                 for (Object aScanResultsList : scanResultsList) {
                     ScanResult scanResult = (ScanResult) aScanResultsList;
-                    fingerprint = new Fingerprint();
 
-                    fingerprint.setSsid(scanResult.SSID);
-                    fingerprint.setBssid(scanResult.BSSID);
-                    fingerprint.setRss(scanResult.level);
-
-                    datasource.insertFingerprint(fingerprint);
+                    // Add <BSSID|SSID,RSS> to hashmap
+                    String hFPKey = scanResult.BSSID + "|" + scanResult.SSID;
+                    int sumRss;
+                    if (hmFingerprint.get(hFPKey) != null) {
+                        sumRss = hmFingerprint.get(hFPKey) + scanResult.level;
+                        hmFingerprint.put(hFPKey, sumRss);
+                    } else {
+                        hmFingerprint.put(scanResult.BSSID + "|" + scanResult.SSID, scanResult.level);
+                    }
                 }
-                ssCounter++;
+                scanCounter++;
 
-                tvScansCompleted = (TextView)findViewById(id.tvScansCompleted);
-                tvScansCompleted.setText(String.valueOf(ssCounter));
-                tvScans = (TextView)findViewById(id.tvScan);
-                tvScans.setMovementMethod(new ScrollingMovementMethod());
                 mHandler.postDelayed(this, mInterval);
             }
         };
     }
 
     public void startScan(View view) {
-        ssCounter = 0;
+        scanCounter = 0;
         startUpdates();
     }
 
     public void stopScan(View view) {
         stopUpdates();
+
+        // Compute Mean RSS for each entry in hashmap
+        computeMeanRSS();
     }
 
-    public void mean(View view) {
-        HashMap<String, Double> hmMean;
-        hmMean = datasource.getMeanValue(ssCounter);
-        StringBuilder meanValues = new StringBuilder();
-        for (Map.Entry<String, Double> entry : hmMean.entrySet()) {
-//            meanValues += entry.getKey() + " | " + entry.getValue() + "\n";
-            meanValues.append(entry.getKey()).append(" | ").append(entry.getValue()).append("\n");
+    public void computeMeanRSS() {
+
+        /*
+         * Iterate through hashmap, extract BSSID, SSID and Mean RSS of each access point
+         * and store it in the fingerprint_table
+         */
+        for (Map.Entry<String, Integer> entry : hmFingerprint.entrySet()) {
+            Fingerprint fingerprint = new Fingerprint();
+
+            // Split the pipe separated key into BSSID and SSID and compute Mean RSS value
+            String key = entry.getKey();
+            String bssid = key.substring(0, key.indexOf("|"));
+            String ssid = key.substring(key.indexOf("|") + 1, key.length());
+            int meanRSS = entry.getValue() / scanCounter;
+
+            // Store it in a Fingerprint object to insert it into database
+            fingerprint.setSsid(ssid);
+            fingerprint.setBssid(bssid);
+            fingerprint.setRss(meanRSS);
+
+            datasource.insertFingerprint(fingerprint);
         }
-        tvMean = (TextView) findViewById(id.tvMean);
-        tvScans.setMovementMethod(new ScrollingMovementMethod());
-        tvMean.setText(meanValues);
     }
 
     public void clearDB(View view) {
         datasource.deleteFingerprint();
-        tvScans = (TextView) findViewById(id.tvScan);
-        tvScans.setText("");
-    }
-
-    public void scan(View view) {
-        // Every time the scan button is pressed, the RSS value for each AP will be captured
-        // and added to the corresponding array of size 4
-
-        // Start the wifi scan
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        wifiManager.startScan();
-
-        // Capture SSID
-        ssid = "";
-        String scans = "";
-
-        // List of access points scanned
-        scanResultsList = wifiManager.getScanResults();
-
-        // Iterate through the scan results and add new RSS values to hashmap
-        for (Object aScanResultsList : scanResultsList) {
-            ScanResult scanResult = (ScanResult) aScanResultsList;
-            ssid = scanResult.SSID;
-            if (hRss.get(ssid) != null) {
-                sum = hRss.get(ssid);
-                sum += WifiManager.calculateSignalLevel(scanResult.level, 100);
-            } else {
-                sum = WifiManager.calculateSignalLevel(scanResult.level, 100);
-            }
-            hRss.put(ssid, sum);
-            scans += ssid + " : " + sum + "\n";
-        }
-        ssCounter++;
-
-        tvScans = (TextView)findViewById(id.tvScan);
-        tvScans.setMovementMethod(new ScrollingMovementMethod());
-        tvScans.setText(scans);
-
     }
 
     public synchronized void startUpdates() {

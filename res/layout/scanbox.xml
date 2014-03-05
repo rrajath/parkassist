@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cell Details"
+        android:text="@string/cell_details_title"
         android:id="@+id/tvCellDetails"
         android:layout_gravity="center_horizontal"/>
 
@@ -21,21 +21,30 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scan"
+            android:text="@string/scan_button"
             android:id="@+id/bScan"
+            android:onClick="startScan"
             android:layout_gravity="center_horizontal"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/stop_button"
+            android:id="@+id/bStop"
+            android:onClick="stopScan"
+            android:layout_gravity="center_horizontal"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_button"
             android:id="@+id/bCancel"
             android:layout_gravity="bottom"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="@string/ok_button"
             android:id="@+id/bOkay"
             android:layout_gravity="bottom"/>
 
