@@ -27,7 +27,6 @@ public class ScanActivity extends Activity {
     TextView tvScansCompleted;
     WifiManager wifiManager;
     String ssid;
-    String refPoint;
     HashMap<String, Integer> hRss = new HashMap<String, Integer>();
     Fingerprint fingerprint;
     List scanResultsList;
@@ -43,7 +42,6 @@ public class ScanActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(layout.scanbox);
 
-        refPoint = getIntent().getExtras().getString("thepoint");
         datasource = new FingerprintDS(this);
         datasource.open();
 
@@ -71,7 +69,6 @@ public class ScanActivity extends Activity {
                     fingerprint.setSsid(scanResult.SSID);
                     fingerprint.setBssid(scanResult.BSSID);
                     fingerprint.setRss(scanResult.level);
-                    fingerprint.setRefPoint(refPoint);
 
                     datasource.insertFingerprint(fingerprint);
                 }
