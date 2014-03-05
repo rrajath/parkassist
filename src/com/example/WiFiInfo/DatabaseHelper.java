@@ -18,7 +18,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "_id integer primary key autoincrement, " +
                     "bssid text not null, " +
                     "ssid text not null, " +
-                    "rss integer not null);";
+                    "rss integer not null, " +
+                    "refPoint text not null);";
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.w(DatabaseHelper.class.getName(),"Upgrading database from version " + oldVersion
                     + " to "
                     + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS titles");
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
         onCreate(db);
     }
 }

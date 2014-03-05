@@ -27,6 +27,7 @@ public class ScanActivity extends Activity {
     TextView tvScansCompleted;
     WifiManager wifiManager;
     String ssid;
+    String refPoint;
     HashMap<String, Integer> hRss = new HashMap<String, Integer>();
     Fingerprint fingerprint;
     List scanResultsList;
@@ -42,9 +43,11 @@ public class ScanActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(layout.scanbox);
 
+        refPoint = getIntent().getExtras().getString("thepoint");
         datasource = new FingerprintDS(this);
         datasource.open();
 
+        datasource.refreshDB();
         // Start the wifi scan
         mHandler = new Handler();
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -68,6 +71,7 @@ public class ScanActivity extends Activity {
                     fingerprint.setSsid(scanResult.SSID);
                     fingerprint.setBssid(scanResult.BSSID);
                     fingerprint.setRss(scanResult.level);
+                    fingerprint.setRefPoint(refPoint);
 
                     datasource.insertFingerprint(fingerprint);
                 }
@@ -89,21 +93,6 @@ public class ScanActivity extends Activity {
 
     public void stopScan(View view) {
         stopUpdates();
-/*        List<Fingerprint> fingerprintList = datasource.getAllFingerprints();
-        String str = "";
-        if (fingerprintList.size() == 0) {
-            str = "No values found!";
-        }
-        for (Object aFingerprint : fingerprintList) {
-            Fingerprint fp = (Fingerprint)aFingerprint;
-        str = str +
-                fp.getId() + " | " +
-                fp.getBssid() + " | " +
-                fp.getSsid() + " | " +
-                fp.getRss() + "\n";
-    }
-        tvScans = (TextView) findViewById(id.tvScan);
-        tvScans.setText(str);*/
     }
 
     public void mean(View view) {

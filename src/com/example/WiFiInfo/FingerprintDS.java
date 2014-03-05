@@ -21,8 +21,9 @@ public class FingerprintDS {
     public static final String KEY_BSSID = "bssid";
     public static final String KEY_SSID = "ssid";
     public static final String KEY_RSS = "rss";
+    public static final String KEY_REF = "refPoint";
 
-    public String[] allColumns = {KEY_ROWID, KEY_BSSID, KEY_SSID, KEY_RSS};
+    public String[] allColumns = {KEY_ROWID, KEY_BSSID, KEY_SSID, KEY_RSS,KEY_REF };
 
     public FingerprintDS(Context ctx) {
         DBHelper = new DatabaseHelper(ctx);
@@ -96,11 +97,16 @@ public class FingerprintDS {
         return hmMean;
     }
 
+    public void refreshDB() {
+        DBHelper.onUpgrade(db, 1, 2);
+    }
+
     public long insertFingerprint(Fingerprint fp) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_RSS, fp.getRss());
         initialValues.put(KEY_SSID, fp.getSsid());
         initialValues.put(KEY_BSSID, fp.getBssid());
+        initialValues.put(KEY_REF,fp.getRefPoint());
 
         return db.insert(DatabaseHelper.DATABASE_TABLE, null, initialValues);
     }
@@ -108,11 +114,13 @@ public class FingerprintDS {
 
     //---updates a fingerprint---
     public boolean updateFingerprint(long rowId, int rss,
-                                     String bssid, String ssid) {
+                                     String bssid, String ssid ,String ref) {
         ContentValues args = new ContentValues();
         args.put(KEY_RSS, rss);
         args.put(KEY_BSSID, bssid);
         args.put(KEY_SSID, ssid);
+        args.put(KEY_REF,ref);
+
 
         return db.update(DatabaseHelper.DATABASE_TABLE, args,
                 KEY_ROWID + "=" + rowId, null) > 0;
@@ -128,6 +136,7 @@ public class FingerprintDS {
         fingerprint.setBssid(cursor.getString(1));
         fingerprint.setSsid(cursor.getString(2));
         fingerprint.setRss(cursor.getInt(3));
+        fingerprint.setRefPoint(cursor.getString(4));
 
         return fingerprint;
     }
