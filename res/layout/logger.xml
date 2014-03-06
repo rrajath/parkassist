@@ -6,15 +6,16 @@
               android:layout_height="match_parent">
 
     <Button
-            android:layout_width="224dp"
-            android:layout_height="70dp"
-            android:text="Logger"
-            android:id="@+id/bLogger"/>
+        android:layout_width="224dp"
+        android:layout_height="70dp"
+        android:text="Logger"
+        android:id="@+id/bLogger"/>
+
     <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="224dp"
-            android:layout_height="70dp"
-            android:text="ClearDB"
-            android:onClick="clearDB"
-            android:id="@+id/bClearDB"/>
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="224dp"
+        android:layout_height="70dp"
+        android:text="ClearDB"
+        android:onClick="clearDB"
+        android:id="@+id/bClearDB"/>
 </LinearLayout>

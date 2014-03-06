@@ -3,118 +3,124 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="#3E80B4"
-              android:orientation="vertical" >
+              android:orientation="vertical">
 
     <TextView
-            android:id="@+id/txt_dia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Cell Details ?"
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
-            android:textStyle="bold" >
+        android:id="@+id/tvCellDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/cell_details_title"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="15sp">
     </TextView>
 
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#3E80B4"
-            android:orientation="horizontal" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#3E80B4"
+        android:orientation="horizontal">
 
         <Button
-                android:id="@+id/btn_scan"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:text="Scan"
-                android:textColor="#5DBCD2"
-                android:textStyle="bold" />
+            android:id="@+id/btn_scan"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="@string/scan_button"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold"/>
 
         <Button
-                android:id="@+id/btn_stop"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:text="Stop"
-                android:textColor="#5DBCD2"
-                android:textStyle="bold" />
+            android:id="@+id/btn_stop"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="@string/stop_button"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textView" android:layout_gravity="center_horizontal"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"/>
+
     <TextView
-            android:id="@+id/txt_dir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Direction ?"
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
-            android:textStyle="bold" >
+        android:id="@+id/tvDirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/direction"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="15sp">
     </TextView>
+
     <Spinner
-            android:layout_width="181dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"
-            android:id="@+id/spinner" android:layout_gravity="center_horizontal" android:spinnerMode="dropdown"/>
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:id="@+id/spinner"
+        android:layout_gravity="center_horizontal"
+        android:spinnerMode="dropdown"/>
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textView3" android:layout_gravity="center_horizontal"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"/>
+
     <TextView
-            android:id="@+id/txt_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Do you want to exit ?"
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
-            android:textStyle="bold" >
+        android:id="@+id/tvSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/save"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="bold">
     </TextView>
+
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#3E80B4"
-            android:orientation="horizontal" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#3E80B4"
+        android:orientation="horizontal">
 
         <Button
-                android:id="@+id/btn_yes"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:text="Yes"
-                android:textColor="#5DBCD2"
-                android:textStyle="bold" />
+            android:id="@+id/btn_yes"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="@string/yes_button"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold"/>
 
         <Button
-                android:id="@+id/btn_no"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/white"
-                android:clickable="true"
-                android:text="No"
-                android:textColor="#5DBCD2"
-                android:textStyle="bold" />
+            android:id="@+id/btn_no"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="@string/no_button"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
 </LinearLayout>
-
-
-
-

@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ParkAssist</string>
-    <string name="scan_button">Scan</string>
-    <string name="stop_button">Stop</string>
     <string name="scans_completed">Scans Completed: </string>
-    <string name="cell_details_title">Cell Details</string>
     <string name="cancel_button">Cancel</string>
     <string name="ok_button">OK</string>
     <string name="logger_button">Logger</string>
     <string name="clearDB_button">Clear DB</string>
+    <string name="cell_details_title">Cell Details?</string>
+    <string name="scan_button">Scan</string>
+    <string name="stop_button">Stop</string>
+    <string name="direction">Direction ?</string>
+    <string name="save">Do you want to save?</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
 
-        <string-array name="direction">
-            <item>East</item>
-            <item>West</item>
-            <item>North</item>
-            <item>South</item>
-            </string-array>
+    <string-array name="direction">
+        <item>East</item>
+        <item>West</item>
+        <item>North</item>
+        <item>South</item>
+    </string-array>
 
 </resources>
