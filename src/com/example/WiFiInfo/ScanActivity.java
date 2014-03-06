@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.WiFiInfo.R.layout;
-
 public class ScanActivity extends Activity {
     WifiManager wifiManager;
     HashMap<String, Integer> hmFingerprint = new HashMap<String, Integer>();
@@ -24,12 +22,12 @@ public class ScanActivity extends Activity {
     int mInterval = 1000;
     Handler mHandler = new Handler();
     Runnable statusChecker;
-    FingerprintDS datasource;
+    Datasource datasource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.scanbox);
+        setContentView(R.layout.scanbox);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -42,7 +40,7 @@ public class ScanActivity extends Activity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        datasource = new FingerprintDS(this, "fingerprint_table");
+        datasource = new Datasource(this, "fingerprint_table");
         datasource.open();
 
         //  datasource.refreshDB();
@@ -71,7 +69,7 @@ public class ScanActivity extends Activity {
                         sumRss = hmFingerprint.get(hFPKey) + scanResult.level;
                         hmFingerprint.put(hFPKey, sumRss);
                     } else {
-                        hmFingerprint.put(scanResult.BSSID + "|" + scanResult.SSID, scanResult.level);
+                        hmFingerprint.put(hFPKey, scanResult.level);
                     }
                 }
                 scanCounter++;
