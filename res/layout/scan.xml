@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:weightSum="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan"
+            android:onClick="startScan"
+            android:id="@+id/bScan"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:onClick="stopScan"
+            android:id="@+id/bStop"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Scans Completed: "
+        android:id="@+id/tvScansLabel"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/tvScansCompleted"
+        />
+
+    <TextView
+        android:scrollbars="vertical"
+        android:maxLines="30"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:text="New Text"
+        android:id="@+id/tvScan"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ClearDB"
+        android:onClick="clearDB"
+        android:id="@+id/bClearDB"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mean"
+        android:onClick="mean"
+        android:id="@+id/bMean"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:weightSum="1">
+
+        <TextView
+            android:scrollbars="vertical"
+            android:maxLines="30"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Mean: "
+            android:id="@+id/tvMean"/>
+    </ScrollView>
+
+
+</LinearLayout>
+

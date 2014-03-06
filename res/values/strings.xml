@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkAssist</string>
+
+        <string-array name="direction">
+            <item>East</item>
+            <item>West</item>
+            <item>North</item>
+            <item>South</item>
+            </string-array>
+
+</resources>
