@@ -1,4 +1,4 @@
-package com.example.WiFiInfo;
+package com.example.ParkAssist;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,30 +8,30 @@ import android.util.Log;
 /**
  * Created by AMAN on 3/5/14.
  */
-public class NavCellDBHelper extends SQLiteOpenHelper {
-
-    public static final String DATABASE_TABLE = " navigation_table";
-
-    public static final String DATABASE_NAV_CREATE =
+public class ParkCellDBHelper extends SQLiteOpenHelper {
+    public static final String DATABASE_TABLE = " parking_table";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_PARK_CREATE =
             "create table" + DATABASE_TABLE + "(" +
-                    "nav_cell_id integer primary key autoincrement," +
-                    "fp_id integer not null," +
-                    "direction Text," +
-                    "x_cord  integer not null, " +
+                    "park_cell_id integer primary key autoincrement," +
+                    "nav_cell_id  integer not null," +
+                    "x_cord  integer not null , " +
                     "y_cord integer not null," +
-                    "FOREIGN KEY(fp_id) REFERENCES fingerprint_table(fp_id));";
+                    "FOREIGN KEY(nav_cell_id) REFERENCES navigation_table(nav_cell_id));";
 
 
-    public NavCellDBHelper(Context context) {
-        super(context, FingerprintDBHelper.DATABASE_NAME, null, FingerprintDBHelper.DATABASE_VERSION);
+    ParkCellDBHelper(Context context) {
+
+        super(context, FingerprintDBHelper.DATABASE_NAME, null, DATABASE_VERSION);
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_NAV_CREATE);
-
+        db.execSQL(DATABASE_PARK_CREATE);
     }
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
                           int newVersion) {
         Log.w(FingerprintDBHelper.class.getName(), "Upgrading database from version " + oldVersion
@@ -40,4 +40,6 @@ public class NavCellDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
         onCreate(db);
     }
+
+
 }

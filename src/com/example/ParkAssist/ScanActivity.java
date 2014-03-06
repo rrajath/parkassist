@@ -1,4 +1,4 @@
-package com.example.WiFiInfo;
+package com.example.ParkAssist;
 
 import android.app.Activity;
 import android.content.Context;

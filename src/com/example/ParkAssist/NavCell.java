@@ -1,4 +1,4 @@
-package com.example.WiFiInfo;
+package com.example.ParkAssist;
 
 /**
  * Created by rrajath on 3/6/14.
