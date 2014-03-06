@@ -11,15 +11,15 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "fingerprint_db";
-    public static final String DATABASE_TABLE = "fingerprint_table";
+    public static final String DATABASE_FP_TABLE = "fingerprint_table";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_CREATE =
-            "create table " + DATABASE_TABLE + "(" +
-                    "_id integer primary key autoincrement, " +
+            "create table " + DATABASE_FP_TABLE + "(" +
+                    "fp_id integer primary key autoincrement, " +
                     "bssid text not null, " +
                     "ssid text not null, " +
-                    "rss integer not null, " +
-                    "refPoint text not null);";
+                    "rss integer not null,); ";
+
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,13 +30,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_CREATE);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,
                           int newVersion) {
             Log.w(DatabaseHelper.class.getName(),"Upgrading database from version " + oldVersion
                     + " to "
                     + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_FP_TABLE);
         onCreate(db);
     }
 }

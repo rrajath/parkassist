@@ -9,4 +9,12 @@
     <string name="ok_button">OK</string>
     <string name="logger_button">Logger</string>
     <string name="clearDB_button">Clear DB</string>
+
+        <string-array name="direction">
+            <item>East</item>
+            <item>West</item>
+            <item>North</item>
+            <item>South</item>
+            </string-array>
+
 </resources>

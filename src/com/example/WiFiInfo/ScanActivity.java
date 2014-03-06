@@ -7,6 +7,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +30,22 @@ public class ScanActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.scanbox);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
-        datasource = new FingerprintDS(this);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.direction, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        datasource = new FingerprintDS(this, "fingerprint_table");
         datasource.open();
 
-        datasource.refreshDB();
+        //  datasource.refreshDB();
         // Start the wifi scan
         mHandler = new Handler();
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -105,7 +118,7 @@ public class ScanActivity extends Activity {
     }
 
     public void clearDB(View view) {
-        datasource.deleteFingerprint();
+//        datasource.deleteFingerprint();
     }
 
     public synchronized void startUpdates() {
