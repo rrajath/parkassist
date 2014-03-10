@@ -2,6 +2,7 @@ package com.example.WiFiInfo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +122,34 @@ public class ScanActivity extends Activity {
         tvScans = (TextView) findViewById(id.tvScan);
         tvScans.setText("");
     }
+
+
+
+    public void singleScan(View view){
+
+
+        //This method will be  called only once.
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
+        scanResultsList = wifiManager.getScanResults();
+        ArrayList<String> wifiList = new ArrayList<String>();
+        ssid ="";
+        String scan = "";
+        for(Object ascanresultList: scanResultsList){
+            ScanResult scanResult = (ScanResult)ascanresultList;
+            ssid = scanResult.BSSID + scanResult.SSID + wifiManager.calculateSignalLevel(scanResult.level ,100);
+            wifiList.add(ssid);
+
+
+        }
+
+
+        Intent intent = new Intent(ScanActivity.this, ViewActivity.class);
+
+        intent.putExtra("wifiScanList" , wifiList);
+        startActivity(intent);
+    }
+
 
     public void scan(View view) {
         // Every time the scan button is pressed, the RSS value for each AP will be captured

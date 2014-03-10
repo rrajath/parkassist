@@ -17,7 +17,7 @@ public class ParkCellDatabaseHelper extends SQLiteOpenHelper {
                     "nav_cell_id  integer not null," +
                     "x_cord  integer not null , "
                     + "y_cord integer not null,"
-                    + "FOREIGN KEY(nav_cell_id) REFERENCES navigation_table(nav_cell_id));"   ;
+                    + "FOREIGN KEY(nav_cell_id) REFERENCES navigation_table(nav_cell_id));" ;
 
 
 

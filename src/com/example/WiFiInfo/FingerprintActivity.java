@@ -51,7 +51,9 @@ public class FingerprintActivity extends Activity {
                 Intent intent = new Intent(FingerprintActivity.this, ScanActivity.class);
                 startActivity(intent);
 
-                v.setBackgroundColor(Color.GREEN);
+//                v.setBackgroundColor(Color.GREEN);
+
+                gridView.getChildAt(position).setBackgroundColor(Color.GREEN);
 
            }
         });
