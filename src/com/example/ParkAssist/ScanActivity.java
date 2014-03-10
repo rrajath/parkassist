@@ -2,6 +2,7 @@ package com.example.ParkAssist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +77,9 @@ public class ScanActivity extends Activity {
                 }
                 scanCounter++;
 
+                TextView tvScansCompleted = (TextView) findViewById(R.id.tvScansCompleted);
+                tvScansCompleted.setText("Scans Completed: " + scanCounter);
+
                 mHandler.postDelayed(this, mInterval);
             }
         };
@@ -82,6 +88,19 @@ public class ScanActivity extends Activity {
     public void startScan(View view) {
         scanCounter = 0;
         startUpdates();
+    }
+
+    public void viewScans(View view) {
+        ArrayList<String> alScans = new ArrayList<String>();
+        String str = "";
+        for (Map.Entry<String, Integer> entry : hmFingerprint.entrySet()) {
+            str = entry.getKey() + " | " + entry.getValue();
+            alScans.add(str);
+        }
+        Intent intent = new Intent(ScanActivity.this, ViewActivity.class);
+        intent.putExtra("wifiScanList", alScans);
+
+        startActivity(intent);
     }
 
     public void stopScan(View view) {
@@ -105,6 +124,7 @@ public class ScanActivity extends Activity {
             String bssid = key.substring(0, key.indexOf("|"));
             String ssid = key.substring(key.indexOf("|") + 1, key.length());
             int meanRSS = entry.getValue() / scanCounter;
+            hmFingerprint.put(key, meanRSS);
 
             // Store it in a Fingerprint object to insert it into database
             fingerprint.setSsid(ssid);
@@ -113,6 +133,26 @@ public class ScanActivity extends Activity {
 
             datasource.insertFingerprint(fingerprint);
         }
+    }
+
+    public void singleScan(View view){
+
+        //This method will be called only once.
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
+        scanResultsList = wifiManager.getScanResults();
+        ArrayList<String> wifiList = new ArrayList<String>();
+        String ssid;
+        for(Object aScanResultList: scanResultsList){
+            ScanResult scanResult = (ScanResult)aScanResultList;
+            ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + scanResult.level;
+            wifiList.add(ssid);
+        }
+
+        Intent intent = new Intent(ScanActivity.this, ViewActivity.class);
+
+        intent.putExtra("wifiScanList" , wifiList);
+        startActivity(intent);
     }
 
     public void clearDB(View view) {

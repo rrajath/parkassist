@@ -30,6 +30,7 @@
             android:layout_height="30dp"
             android:background="@android:color/white"
             android:clickable="true"
+            android:onClick="startScan"
             android:text="@string/scan_button"
             android:textColor="#5DBCD2"
             android:textStyle="bold"/>
@@ -40,6 +41,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
             android:background="@android:color/white"
+            android:onClick="stopScan"
             android:clickable="true"
             android:text="@string/stop_button"
             android:textColor="#5DBCD2"
@@ -48,11 +50,16 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvScansCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="@string/scans_completed"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="15sp">
+    </TextView>
 
     <TextView
         android:id="@+id/tvDirection"
@@ -74,12 +81,31 @@
         android:layout_gravity="center_horizontal"
         android:spinnerMode="dropdown"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/btn_OneScan"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:onClick="singleScan"
+        android:clickable="true"
+        android:text="@string/oneScan_button"
+        android:textColor="#5DBCD2"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_View"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:onClick="viewScans"
+        android:clickable="true"
+        android:text="@string/view_button"
+        android:textColor="#5DBCD2"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/tvSave"
