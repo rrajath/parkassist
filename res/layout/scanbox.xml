@@ -132,6 +132,7 @@
             android:layout_height="30dp"
             android:background="@android:color/white"
             android:clickable="true"
+            android:onClick="saveData"
             android:text="@string/yes_button"
             android:textColor="#5DBCD2"
             android:textStyle="bold"/>
@@ -143,6 +144,7 @@
             android:layout_marginLeft="5dp"
             android:background="@android:color/white"
             android:clickable="true"
+            android:onClick="discardData"
             android:text="@string/no_button"
             android:textColor="#5DBCD2"
             android:textStyle="bold"/>
