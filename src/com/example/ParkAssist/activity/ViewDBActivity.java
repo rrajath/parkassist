@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import com.example.ParkAssist.database.Datasource;
+import com.example.ParkAssist.R;
 
 import java.util.List;
 

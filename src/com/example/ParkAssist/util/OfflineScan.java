@@ -1,7 +1,8 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.util;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import com.example.ParkAssist.entity.Fingerprint;
 
 import java.util.ArrayList;
 import java.util.HashMap;

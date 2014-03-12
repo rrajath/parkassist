@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.entity;
 
 /**
  * Created by rrajath on 2/21/14.

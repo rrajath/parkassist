@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+import com.example.ParkAssist.database.Datasource;
+import com.example.ParkAssist.R;
 
 /**
  * Created by rrajath on 3/11/14.

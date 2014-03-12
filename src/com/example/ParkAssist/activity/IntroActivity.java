@@ -1,10 +1,11 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.example.ParkAssist.R;
 
 /**
  * Created by rrajath on 3/4/14.

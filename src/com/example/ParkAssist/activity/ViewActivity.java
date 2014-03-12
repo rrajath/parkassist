@@ -1,9 +1,10 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.example.ParkAssist.R;
 
 import java.util.ArrayList;
 

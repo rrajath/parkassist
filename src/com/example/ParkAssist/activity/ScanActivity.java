@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.ParkAssist.database.Datasource;
+import com.example.ParkAssist.entity.Fingerprint;
+import com.example.ParkAssist.util.OfflineScan;
+import com.example.ParkAssist.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

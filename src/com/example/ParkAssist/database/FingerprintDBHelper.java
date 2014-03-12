@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.database;
 
 /**
  * Created by rrajath on 2/21/14.

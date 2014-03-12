@@ -1,4 +1,4 @@
-package com.example.ParkAssist;
+package com.example.ParkAssist.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

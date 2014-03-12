@@ -14,28 +14,28 @@
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher">
 
-        <activity android:name="com.example.ParkAssist.IntroActivity">
+        <activity android:name=".activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.ParkAssist.FingerprintActivity"/>
+        <activity android:name=".activity.FingerprintActivity"/>
 
-        <activity android:name="com.example.ParkAssist.ViewDBActivity"/>
+        <activity android:name=".activity.ViewDBActivity"/>
 
         <activity
-            android:name=".ManageDBActivity"
+            android:name=".activity.ManageDBActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog"/>
 
         <activity
-            android:name="com.example.ParkAssist.ScanActivity"
+            android:name=".activity.ScanActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
 
         <activity
-            android:name="com.example.ParkAssist.ViewActivity"
+            android:name=".activity.ViewActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
     </application>
