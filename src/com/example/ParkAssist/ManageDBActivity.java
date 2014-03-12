@@ -47,8 +47,7 @@ public class ManageDBActivity extends Activity {
         table = spinner.getSelectedItem().toString();
         datasource = new Datasource(this, table);
         datasource.open();
-//        datasource.deleteTable(table);
-        datasource.refreshDB();
+        datasource.deleteTable(table);
 
         Toast.makeText(getApplicationContext(), table + " deleted", Toast.LENGTH_LONG).show();
         datasource.close();
