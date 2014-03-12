@@ -1,6 +1,7 @@
 package com.example.ParkAssist;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -51,5 +52,19 @@ public class ManageDBActivity extends Activity {
 
         Toast.makeText(getApplicationContext(), table + " deleted", Toast.LENGTH_LONG).show();
         datasource.close();
+    }
+
+    public void viewDB(View view) {
+        table = spinner.getSelectedItem().toString();
+        Intent intent = new Intent(this, ViewDBActivity.class);
+        intent.putExtra("table", table);
+        startActivity(intent);
+    }
+
+    public void refreshDB(View view) {
+        table = spinner.getSelectedItem().toString();
+        datasource = new Datasource(this, table);
+        datasource.open();
+        datasource.refreshDB();
     }
 }

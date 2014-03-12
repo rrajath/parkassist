@@ -57,6 +57,15 @@
             style="?android:buttonBarButtonStyle"
             android:layout_gravity="center_horizontal"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/refresh_db_button"
+            android:onClick="refreshDB"
+            style="?android:buttonBarButtonStyle"
+            android:id="@+id/bRefreshDB"
+            android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
 
 </LinearLayout>

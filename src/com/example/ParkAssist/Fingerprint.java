@@ -37,4 +37,8 @@ public class Fingerprint {
         this.rss = rss;
     }
 
+    public String toString() {
+        return String.valueOf(getFpId() + "   " + ";" + getBssid() + ";" + getSsid() + ";" + getRss() + "    ");
+    }
+
 }

@@ -26,6 +26,7 @@
     <string name="clear_seq_button">Clear Sequence</string>
     <string name="clear_tables_button">Clear Table</string>
     <string name="view_db_button">View DB</string>
+    <string name="refresh_db_button">Refresh DB</string>
 
     <!--Direction dropdown-->
     <string-array name="direction">

@@ -15,8 +15,6 @@ public class OfflineScan {
     HashMap<String, Integer> hmFingerprint = new HashMap<String, Integer>();
     List scanResultsList;
     int scanCounter;
-    Datasource datasource;
-
 
     public void startScan(WifiManager wifiManager) {
 
@@ -26,7 +24,7 @@ public class OfflineScan {
         scanResultsList = wifiManager.getScanResults();
 
         // Initialize hmFingerprint everytime the Scan button is pressed
-        hmFingerprint = new HashMap<String, Integer>();
+//        hmFingerprint = new HashMap<String, Integer>();
 
         // Iterate through the scan results and add new RSS values to hashmap
         for (Object aScanResultsList : scanResultsList) {

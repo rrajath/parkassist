@@ -102,6 +102,30 @@ public class Datasource {
         return fingerprints;
     }
 
+    public List getAllRows() {
+        List objects = new ArrayList();
+        Cursor cursor = db.query(this.tableName, this.columns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            if (tableName.equals("fingerprint_table")) {
+                Fingerprint fingerprint = cursorToFingerprint(cursor);
+                objects.add(fingerprint);
+                cursor.moveToNext();
+            } else if (tableName.equals("parking_table")) {
+                ParkCell parkCell = cursorToParkCell(cursor);
+                objects.add(parkCell);
+                cursor.moveToNext();
+            } else {
+                NavCell navCell = cursorToNavCell(cursor);
+                objects.add(navCell);
+                cursor.moveToNext();
+            }
+
+        }
+        cursor.close();
+        return objects;
+    }
 
     //---retrieves a particular row---
     public Cursor getRss(long rowId) throws SQLException {
