@@ -14,7 +14,6 @@ import java.util.List;
  * Created by AMAN
  */
 public class Datasource {
-    private FingerprintDBHelper DBHelper; //Not using anymore
     private SQLiteOpenHelper DbHelper;
     private SQLiteDatabase db;
 
@@ -77,11 +76,13 @@ public class Datasource {
     /*
      * Deletes all rows from the table
      */
-    public boolean deleteTables()
+    public void deleteSequence(String tableName)
     {
-        db.rawQuery("DELETE FROM SQLITE_SEQUENCE WHERE NAME='" + this.tableName + "'", null);
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME='" + tableName + "'");
+    }
 
-        return db.delete(this.tableName, null, null) > 0;
+    public boolean deleteTable(String tableName) {
+        return db.delete(tableName, null, null) > 0;
     }
 
     public List<Fingerprint> getAllFingerprints() //Retrieve All the rows
@@ -121,7 +122,7 @@ public class Datasource {
     }
 
     public void refreshDB() {
-        DBHelper.onUpgrade(db, 1, 2);
+        DbHelper.onUpgrade(db, 1, 2);
     }
 
     public long insertFingerprint(Fingerprint fp) {        //Insert into Fingerprint Table

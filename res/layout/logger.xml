@@ -17,5 +17,5 @@
         android:layout_height="70dp"
         android:text="ClearDB"
         android:onClick="clearDB"
-        android:id="@+id/bClearDB"/>
+        android:id="@+id/bManageDB"/>
 </LinearLayout>

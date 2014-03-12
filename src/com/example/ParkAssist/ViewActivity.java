@@ -19,10 +19,7 @@ public class ViewActivity extends Activity {
         setContentView(R.layout.view);
         ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("wifiScanList");
         display_wifi_List = (ListView)findViewById(R.id.wifiList);
-        display_wifi_List.setAdapter(new ArrayAdapter<String>(ViewActivity.this , android.R.layout.simple_list_item_1,list));
-
-
-
-
+        display_wifi_List.setAdapter(new ArrayAdapter<String>(ViewActivity.this,
+                android.R.layout.simple_list_item_1,list));
     }
 }

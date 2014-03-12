@@ -13,7 +13,7 @@ public class NavCellDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_TABLE = " navigation_table";
 
     public static final String DATABASE_NAV_CREATE =
-            "create table" + DATABASE_TABLE + "(" +
+            "create table " + DATABASE_TABLE + " (" +
                     "nav_cell_id integer primary key autoincrement," +
                     "fp_id integer not null," +
                     "direction Text," +

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--App Name-->
     <string name="app_name">ParkAssist</string>
+
+    <!--Intro Activity-->
+    <string name="logger_button">Logger</string>
+    <string name="manageDB_button">Manage DB</string>
+
+    <!--Scanbox Popup-->
     <string name="scans_completed">Scans Completed: </string>
     <string name="cancel_button">Cancel</string>
     <string name="ok_button">OK</string>
-    <string name="logger_button">Logger</string>
-    <string name="clearDB_button">Clear DB</string>
     <string name="cell_details_title">Cell Details?</string>
     <string name="scan_button">Scan</string>
     <string name="stop_button">Stop</string>
@@ -16,11 +21,25 @@
     <string name="oneScan_button">One Scan</string>
     <string name="view_button">View</string>
 
+    <!--Manage DB popup-->
+    <string name="tvClearTables">Clear Database</string>
+    <string name="clear_seq_button">Clear Sequence</string>
+    <string name="clear_tables_button">Clear Table</string>
+    <string name="view_db_button">View DB</string>
+
+    <!--Direction dropdown-->
     <string-array name="direction">
         <item>East</item>
         <item>West</item>
         <item>North</item>
         <item>South</item>
+    </string-array>
+
+    <!--Tables dropdown-->
+    <string-array name="tables">
+        <item>fingerprint_table</item>
+        <item>parking_table</item>
+        <item>navigation_table</item>
     </string-array>
 
 </resources>

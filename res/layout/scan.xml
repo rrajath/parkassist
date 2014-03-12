@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="ClearDB"
         android:onClick="clearDB"
-        android:id="@+id/bClearDB"/>
+        android:id="@+id/bManageDB"/>
 
     <Button
         android:layout_width="wrap_content"

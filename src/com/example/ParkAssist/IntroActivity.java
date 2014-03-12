@@ -24,5 +24,14 @@ public class IntroActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button bClearDB = (Button) findViewById(R.id.bManageDB);
+        bClearDB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IntroActivity.this, ManageDBActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

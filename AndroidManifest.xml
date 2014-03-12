@@ -24,6 +24,11 @@
         <activity android:name="com.example.ParkAssist.FingerprintActivity"/>
 
         <activity
+            android:name=".ManageDBActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            />
+
+        <activity
             android:name="com.example.ParkAssist.ScanActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />

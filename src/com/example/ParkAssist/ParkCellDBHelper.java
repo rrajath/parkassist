@@ -12,7 +12,7 @@ public class ParkCellDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_TABLE = " parking_table";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_PARK_CREATE =
-            "create table" + DATABASE_TABLE + "(" +
+            "create table " + DATABASE_TABLE + " (" +
                     "park_cell_id integer primary key autoincrement," +
                     "nav_cell_id  integer not null," +
                     "x_cord  integer not null , " +
