@@ -1,0 +1,23 @@
+{
+	parking_cells: [
+		{
+			x: 0
+			y: 0
+			cell_type: 'O'
+			nav_cell_id: 0
+		}
+		{
+			x: 1
+			y: 0
+			cell_type: 'P'
+			nav_cell_id: 0
+		}
+		{
+			x: 2
+			y: 0
+			cell_type: 'P'
+			nav_cell_id: 0
+		}
+
+	]
+}
