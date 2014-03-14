@@ -19,5 +19,12 @@
         android:text="@string/manageDB_button"
         android:id="@+id/bManageDB"
         android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_park_cell_button"
+        android:id="@+id/bLoadParkCellData"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
 
