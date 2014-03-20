@@ -38,5 +38,6 @@
             android:name=".activity.ViewActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
+        <activity android:name=".ViewActivity"/>
     </application>
 </manifest>
