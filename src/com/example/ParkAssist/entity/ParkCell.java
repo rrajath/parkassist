@@ -42,4 +42,8 @@ public class ParkCell {
         return yCord;
     }
 
+    public String toString() {
+        return String.valueOf(getNavCellId() + "   " + ";" + getParkCellId() + ";" + getXCord() + ";" + getYCord() + "    ");
+    }
+
 }
