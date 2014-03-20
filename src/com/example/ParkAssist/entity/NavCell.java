@@ -8,8 +8,8 @@ public class NavCell {
     private int navCellId;
     private int fpId;
     private String direction;
-    private int xCord;
-    private int yCord;
+    private static  int xCord;
+    private static int yCord;
 
     public void setNavCellId(int id) {
         this.navCellId = id;
@@ -32,7 +32,7 @@ public class NavCell {
     }
 
     public void setXCord(int x) {
-        this.xCord = x;
+       xCord = x;
     }
 
     public int getXCord() {
@@ -40,7 +40,7 @@ public class NavCell {
     }
 
     public void setYCord(int y) {
-        this.yCord = y;
+        yCord = y;
     }
 
     public int getYCord() {

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.ParkAssist.database.Datasource;
 import com.example.ParkAssist.entity.Fingerprint;
+import com.example.ParkAssist.entity.NavCell;
 import com.example.ParkAssist.util.OfflineScan;
 import com.example.ParkAssist.R;
 
@@ -49,6 +50,13 @@ public class ScanActivity extends Activity {
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        NavCell nav = new NavCell();
+        int s = nav.getXCord();
+        TextView getX = (TextView)findViewById(R.id.getX);
+        TextView getY = (TextView)findViewById(R.id.getY);
+
+        getX.setText(""+ nav.getXCord());
+        getY.setText("" + nav.getYCord());
 
         datasource = new Datasource(this, "fingerprint_table");
         datasource.open();
