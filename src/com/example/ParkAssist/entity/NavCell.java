@@ -3,13 +3,13 @@ package com.example.ParkAssist.entity;
 /**
  * Created by rrajath on 3/6/14.
  */
-public class NavCell {
+public class NavCell extends Cell {
 
     private int navCellId;
     private int fpId;
     private String direction;
-    private static  int xCord;
-    private static int yCord;
+    private int xCord;
+    private int yCord;
 
     public void setNavCellId(int id) {
         this.navCellId = id;
@@ -47,4 +47,7 @@ public class NavCell {
         return yCord;
     }
 
+    public String toString() {
+        return String.valueOf(getNavCellId() + "   " + ";" + getFpId() + ";" + getDirection() + ";" + getXCord() + ";" + getYCord() + "    ");
+    }
 }

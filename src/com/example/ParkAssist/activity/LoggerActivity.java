@@ -23,11 +23,5 @@ public class LoggerActivity extends Activity {
 
             }
         });
-
-
     }
-
-    public void clearDB(View view) {
-    }
-
 }

@@ -3,7 +3,7 @@ package com.example.ParkAssist.entity;
 /**
  * Created by rrajath on 3/6/14.
  */
-public class ParkCell {
+public class ParkCell extends Cell {
 
     private int navCellId;
     private int parkCellId;

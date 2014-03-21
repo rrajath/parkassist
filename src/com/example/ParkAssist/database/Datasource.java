@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.example.ParkAssist.entity.Cell;
 import com.example.ParkAssist.entity.Fingerprint;
 import com.example.ParkAssist.entity.NavCell;
 import com.example.ParkAssist.entity.ParkCell;
@@ -162,7 +163,7 @@ public class Datasource {
     }
 
     // Insert into ParkCell Table
-    public long insertParkTable(ParkCell parkCell) {
+    public long insertParkCell(ParkCell parkCell) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NAV_ROWID, parkCell.getNavCellId());  // Navigation id "foreign key"
         initialValues.put(KEY_X_CORD, parkCell.getXCord());
@@ -172,13 +173,38 @@ public class Datasource {
     }
 
     // Insert into NavCell Table
-    public long insertNavTable(NavCell navCell) {
+    public long insertNavCell(NavCell navCell) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_FP_ROWID, navCell.getNavCellId());     //fp id " foreign key"
         initialValues.put(KEY_DIR, navCell.getDirection());
         initialValues.put(KEY_X_CORD, navCell.getXCord());
         initialValues.put(KEY_Y_CORD, navCell.getYCord());
         return db.insert(tableName, null, initialValues);
+    }
+
+    public int updateParkCell(int x, int y, int navCellId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nav_cell_id", navCellId);
+        String whereClause = KEY_X_CORD + " = " + x + " AND " + KEY_Y_CORD + " = " + y;
+        return db.update(tableName, contentValues, whereClause, null);
+    }
+
+    public Cell getCell(int x, int y) {
+        String whereClause = " X_CORD = " + x + " AND Y_CORD = " + y;
+        Cursor cursor = db.query(this.tableName, this.columns, whereClause, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Cell cell;
+        if (tableName.equals("parking_table")) {
+            cell = (ParkCell)cursorToParkCell(cursor);
+        } else {
+            cell = (NavCell)cursorToNavCell(cursor);
+        }
+
+        return cell;
     }
 
     private Fingerprint cursorToFingerprint(Cursor cursor) {
@@ -202,6 +228,9 @@ public class Datasource {
     }
 
     private NavCell cursorToNavCell(Cursor cursor) {
+        if (cursor.getCount() <= 0) {
+            return null;
+        }
         NavCell navCell = new NavCell();
         navCell.setNavCellId(cursor.getInt(0));
         navCell.setFpId(cursor.getInt(1));

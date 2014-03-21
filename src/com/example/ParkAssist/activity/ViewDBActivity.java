@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import com.example.ParkAssist.database.Datasource;
 import com.example.ParkAssist.R;
+import com.example.ParkAssist.database.Datasource;
 
 import java.util.List;
 
@@ -55,15 +55,30 @@ public class ViewDBActivity extends Activity {
         tableLayout.setStretchAllColumns(true);
         tableLayout.removeAllViews();
 
-        for (int i = 0; i < rows.length; i++) {
-            String row = rows[i];
+        TableRow headerRow = new TableRow(getApplicationContext());
+        headerRow.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        headerRow.setBackgroundColor(Color.LTGRAY);
+
+        String[] columnNames = datasource.columns;
+
+        for (String column : columnNames) {
+            TextView columnHeaders = new TextView(getApplicationContext());
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            columnHeaders.setLayoutParams(params);
+            columnHeaders.setTextColor(Color.BLUE);
+            columnHeaders.setText(String.format("%17s", column));
+            headerRow.addView(columnHeaders);
+        }
+        tableLayout.addView(headerRow);
+
+        for (String row : rows) {
             TableRow tableRow = new TableRow(getApplicationContext());
             tableRow.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             tableRow.setBackgroundColor(Color.LTGRAY);
             final String[] cols = row.split(";");
 
-            for (int j = 0; j < cols.length; j++) {
-                final String col = cols[j];
+            for (final String col : cols) {
                 TextView columnsView = new TextView(getApplicationContext());
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
                 params.gravity = Gravity.CENTER_HORIZONTAL;

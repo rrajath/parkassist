@@ -8,15 +8,13 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import com.example.ParkAssist.R;
 import com.example.ParkAssist.database.Datasource;
+import com.example.ParkAssist.entity.Cell;
 import com.example.ParkAssist.entity.Fingerprint;
 import com.example.ParkAssist.entity.NavCell;
 import com.example.ParkAssist.util.OfflineScan;
-import com.example.ParkAssist.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +32,9 @@ public class ScanActivity extends Activity {
     Runnable statusChecker;
     Datasource datasource;
     ArrayList fpList;
+    String direction;
+    int x;
+    int y;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,18 +51,38 @@ public class ScanActivity extends Activity {
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        NavCell nav = new NavCell();
-        int s = nav.getXCord();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                direction = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        x = bundle.getInt("x");
+        y = bundle.getInt("y");
+
+        Button bDetails = (Button) findViewById(R.id.btn_Details);
+        // Display Details button
+        if (!isNavCellEmpty()) {
+            bDetails.setVisibility(View.VISIBLE);
+        } else {
+            bDetails.setVisibility(View.INVISIBLE);
+        }
+
         TextView getX = (TextView)findViewById(R.id.getX);
         TextView getY = (TextView)findViewById(R.id.getY);
 
-        getX.setText(""+ nav.getXCord());
-        getY.setText("" + nav.getYCord());
+        getX.setText(String.valueOf(x));
+        getY.setText(String.valueOf(y));
 
-        datasource = new Datasource(this, "fingerprint_table");
-        datasource.open();
-
-        //  datasource.refreshDB();
         // Start the wifi scan
         mHandler = new Handler();
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -79,6 +100,13 @@ public class ScanActivity extends Activity {
                 mHandler.postDelayed(this, mInterval);
             }
         };
+    }
+
+    private boolean isNavCellEmpty() {
+        datasource = new Datasource(this, "navigation_table");
+        datasource.open();
+        Cell cell = datasource.getCell(x, y);
+        return cell == null;
     }
 
     public void startScan(View view) {
@@ -108,12 +136,35 @@ public class ScanActivity extends Activity {
 
     public void saveData(View view) {
         // Save fingerprints to Database
+        datasource = new Datasource(this, "fingerprint_table");
+        datasource.open();
         for (Object fingerprint : fpList) {
             datasource.insertFingerprint((Fingerprint) fingerprint);
         }
-        Toast.makeText(getApplicationContext(), fpList.size() + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
-    }
+        datasource.close();
 
+        // Display a notification as to how many fingerprints were stored
+        Toast.makeText(getApplicationContext(), fpList.size() + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
+
+        // Save a record into navigation table
+
+        NavCell navCell = new NavCell();
+        navCell.setXCord(x);
+        navCell.setYCord(y);
+        navCell.setDirection(direction);
+
+        datasource = new Datasource(this, "navigation_table");
+        datasource.open();
+        int navCellId = (int) datasource.insertNavCell(navCell);
+        datasource.close();
+
+        // Update neighboring park cells
+        datasource = new Datasource(this, "parking_table");
+        datasource.open();
+        datasource.updateParkCell(x - 1, y, navCellId);
+        datasource.updateParkCell(x + 1, y, navCellId);
+        datasource.close();
+    }
 
     public void discardData(View view) {
         // Discard all fingerprints recorded in that scan

@@ -33,6 +33,7 @@ public class IntroActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
 
+        // Logger Button
         Button bLogger = (Button) findViewById(R.id.bLogger);
         bLogger.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +43,7 @@ public class IntroActivity extends Activity {
             }
         });
 
+        // ManageDB Button
         Button bClearDB = (Button) findViewById(R.id.bManageDB);
         bClearDB.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -51,6 +53,7 @@ public class IntroActivity extends Activity {
             }
         });
 
+        // Loading JSON data Button
         Button bLoadParkCellData = (Button) findViewById(R.id.bLoadParkCellData);
         bLoadParkCellData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +74,7 @@ public class IntroActivity extends Activity {
         @Override
         protected String doInBackground(String... params) {
             DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-            HttpGet httppost = new HttpGet("http://p1cdn2static.sharpschool.com/UserFiles/Servers/Server_442934/File/Neurology/parkCell.json.txt");
+            HttpGet httppost = new HttpGet("http://p1cdn2static.sharpschool.com/UserFiles/Servers/Server_442934/File/Neurology/parkcells.json");
 
             // Depends on your web service
             httppost.setHeader("Content-type", "text/html");
@@ -111,7 +114,7 @@ public class IntroActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
             JSONArray jsonArray = null;
             try {
                 jsonObject = new JSONObject(result);
@@ -134,7 +137,7 @@ public class IntroActivity extends Activity {
                     parkCell.setNavCellId(object.getInt("nav_cell_id"));
                     cellType = object.getString("cell_type");
                     if (cellType.equals("P")) {
-                        datasource.insertParkTable(parkCell);
+                        datasource.insertParkCell(parkCell);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:text="X"
+                android:text="@string/tvX"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:text="Y"
+                android:text="@string/tvY"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
@@ -62,7 +62,6 @@
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
-
 
     </LinearLayout>
 
@@ -83,6 +82,7 @@
             android:onClick="startScan"
             android:text="@string/scan_button"
             android:textColor="#5DBCD2"
+            style="?android:buttonBarButtonStyle"
             android:textStyle="bold"/>
 
         <Button
@@ -95,6 +95,7 @@
             android:clickable="true"
             android:text="@string/stop_button"
             android:textColor="#5DBCD2"
+            style="?android:buttonBarButtonStyle"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -158,6 +159,20 @@
         android:textStyle="bold"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/btn_Details"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:onClick="viewScans"
+        android:clickable="true"
+        android:text="@string/details_button"
+        android:visibility="visible"
+        android:textColor="#5DBCD2"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
     <TextView
         android:id="@+id/tvSave"
         android:layout_width="wrap_content"
@@ -186,6 +201,7 @@
             android:onClick="saveData"
             android:text="@string/yes_button"
             android:textColor="#5DBCD2"
+            style="?android:buttonBarButtonStyle"
             android:textStyle="bold"/>
 
         <Button
@@ -198,6 +214,7 @@
             android:onClick="discardData"
             android:text="@string/no_button"
             android:textColor="#5DBCD2"
+            style="?android:buttonBarButtonStyle"
             android:textStyle="bold"/>
 
     </LinearLayout>
