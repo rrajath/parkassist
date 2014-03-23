@@ -7,6 +7,7 @@
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -14,7 +15,9 @@
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher">
 
-        <activity android:name=".activity.IntroActivity">
+        <activity
+            android:name=".activity.IntroActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -26,19 +29,24 @@
             android:screenOrientation="portrait"
             />
 
-        <activity android:name=".activity.ViewDBActivity"/>
+        <activity
+            android:name=".activity.ViewDBActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.ManageDBActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.Dialog"/>
 
         <activity
             android:name=".activity.ScanActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
 
         <activity
             android:name=".activity.ViewActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
     </application>

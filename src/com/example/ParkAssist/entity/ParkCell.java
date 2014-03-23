@@ -43,7 +43,7 @@ public class ParkCell extends Cell {
     }
 
     public String toString() {
-        return String.valueOf(getNavCellId() + "   " + ";" + getParkCellId() + ";" + getXCord() + ";" + getYCord() + "    ");
+        return String.valueOf(getParkCellId() + "   " + ";" + getNavCellId() + ";" + getXCord() + ";" + getYCord() + "    ");
     }
 
 }

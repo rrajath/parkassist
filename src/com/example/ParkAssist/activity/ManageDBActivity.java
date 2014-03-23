@@ -68,5 +68,7 @@ public class ManageDBActivity extends Activity {
         datasource = new Datasource(this, table);
         datasource.open();
         datasource.refreshDB();
+        Toast.makeText(getApplicationContext(), table + " re-created", Toast.LENGTH_LONG).show();
+        datasource.close();
     }
 }

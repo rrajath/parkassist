@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import com.example.ParkAssist.R;
 import com.example.ParkAssist.database.Datasource;
 import com.example.ParkAssist.entity.ParkCell;
@@ -65,6 +66,7 @@ public class IntroActivity extends Activity {
                 String url = "https://www.dropbox.com/s/7bnrr8ba5tcqsn9/parkCells.json";
                 loadJSON.execute(url);
 
+                Toast.makeText(getApplicationContext(), "Loaded ParkCells.json", Toast.LENGTH_LONG).show();
             }
         });
     }

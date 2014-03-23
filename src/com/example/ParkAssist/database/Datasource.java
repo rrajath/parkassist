@@ -94,7 +94,6 @@ public class Datasource {
         List<Fingerprint> fingerprints = new ArrayList<Fingerprint>();
         Cursor cursor = db.query(this.tableName, this.columns, null, null, null, null, "ssid");  //  Please take a look
 
-
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Fingerprint fingerprint = cursorToFingerprint(cursor);
@@ -175,7 +174,8 @@ public class Datasource {
     // Insert into NavCell Table
     public long insertNavCell(NavCell navCell) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_FP_ROWID, navCell.getNavCellId());     //fp id " foreign key"
+        initialValues.put(KEY_NAV_ROWID, navCell.getNavCellId());
+        initialValues.put(KEY_FP_ROWID, navCell.getFpId());     //fp id " foreign key"
         initialValues.put(KEY_DIR, navCell.getDirection());
         initialValues.put(KEY_X_CORD, navCell.getXCord());
         initialValues.put(KEY_Y_CORD, navCell.getYCord());
@@ -205,6 +205,14 @@ public class Datasource {
         }
 
         return cell;
+    }
+
+    public int getMaxNavCellId() {
+        Cursor cursor = db.rawQuery("SELECT MAX(NAV_CELL_ID) FROM NAVIGATION_TABLE", null);
+
+        cursor.moveToFirst();
+
+        return cursor.getInt(0);
     }
 
     private Fingerprint cursorToFingerprint(Cursor cursor) {

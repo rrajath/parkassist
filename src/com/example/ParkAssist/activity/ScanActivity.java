@@ -138,32 +138,43 @@ public class ScanActivity extends Activity {
         // Save fingerprints to Database
         datasource = new Datasource(this, "fingerprint_table");
         datasource.open();
+
+        Datasource navDS = new Datasource(this, "navigation_table");
+        navDS.open();
+
+        // Get max NavCellID from navigation_table
+        int nextNavCellId = 0;
+        nextNavCellId = datasource.getMaxNavCellId();
+        nextNavCellId += 1;
+
         for (Object fingerprint : fpList) {
-            datasource.insertFingerprint((Fingerprint) fingerprint);
+            Fingerprint fp = (Fingerprint) fingerprint;
+            int fpId = (int) datasource.insertFingerprint(fp);
+
+            // Save a record into navigation table
+            NavCell navCell = new NavCell();
+            navCell.setXCord(x);
+            navCell.setYCord(y);
+            navCell.setDirection(direction);
+            navCell.setFpId(fpId);
+            navCell.setNavCellId(nextNavCellId);
+
+            datasource.insertNavCell(navCell);
         }
         datasource.close();
+        navDS.close();
 
         // Display a notification as to how many fingerprints were stored
         Toast.makeText(getApplicationContext(), fpList.size() + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
 
-        // Save a record into navigation table
-
-        NavCell navCell = new NavCell();
-        navCell.setXCord(x);
-        navCell.setYCord(y);
-        navCell.setDirection(direction);
-
-        datasource = new Datasource(this, "navigation_table");
-        datasource.open();
-        int navCellId = (int) datasource.insertNavCell(navCell);
-        datasource.close();
-
         // Update neighboring park cells
         datasource = new Datasource(this, "parking_table");
         datasource.open();
-        datasource.updateParkCell(x - 1, y, navCellId);
-        datasource.updateParkCell(x + 1, y, navCellId);
+        datasource.updateParkCell(x, y - 1, nextNavCellId);
+        datasource.updateParkCell(x, y + 1, nextNavCellId);
         datasource.close();
+
+        finish();
     }
 
     public void discardData(View view) {
