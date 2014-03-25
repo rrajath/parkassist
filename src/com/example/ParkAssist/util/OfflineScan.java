@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class OfflineScan {
     HashMap<String, Integer> hmFingerprint = new HashMap<String, Integer>();
+    HashMap<String, Integer> hmScanCounter = new HashMap<String, Integer>();
     List scanResultsList;
     int scanCounter;
 
@@ -40,8 +41,18 @@ public class OfflineScan {
             } else {
                 hmFingerprint.put(hFPKey, scanResult.level);
             }
+
+            // Check if the value exists in hmScanCounter HashMap
+            int counter;
+            if (hmScanCounter.get(scanResult.BSSID) != null) {
+                counter = hmScanCounter.get(scanResult.BSSID);
+                counter += 1;
+            } else {
+                counter = 1;
+            }
+            hmScanCounter.put(scanResult.BSSID, counter);
+
         }
-        scanCounter++;
     }
 
     public ArrayList computeMeanRSS() {
@@ -59,6 +70,9 @@ public class OfflineScan {
             String key = entry.getKey();
             String bssid = key.substring(0, key.indexOf("|"));
             String ssid = key.substring(key.indexOf("|") + 1, key.length());
+
+            // Get scanCounter value from hashmap
+            scanCounter = hmScanCounter.get(bssid);
             int meanRSS = entry.getValue() / scanCounter;
             hmFingerprint.put(key, meanRSS);
 
