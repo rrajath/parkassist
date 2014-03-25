@@ -64,7 +64,7 @@ public class IntroActivity extends Activity {
                 LoadJSON loadJSON = new LoadJSON();
                 ArrayList<ParkCell> parkCells = new ArrayList<ParkCell>();
                 String url = "https://www.dropbox.com/s/7bnrr8ba5tcqsn9/parkCells.json";
-                loadJSON.execute(url);
+//                loadJSON.execute(url);
 
                 Toast.makeText(getApplicationContext(), "Loaded ParkCells.json", Toast.LENGTH_LONG).show();
             }
@@ -139,7 +139,7 @@ public class IntroActivity extends Activity {
                     parkCell.setNavCellId(object.getInt("nav_cell_id"));
                     cellType = object.getString("cell_type");
                     if (cellType.equals("P")) {
-                        datasource.insertParkCell(parkCell);
+//                        datasource.insertParkCell(parkCell);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

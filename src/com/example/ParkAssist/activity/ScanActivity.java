@@ -168,11 +168,13 @@ public class ScanActivity extends Activity {
         Toast.makeText(getApplicationContext(), fpList.size() + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
 
         // Update neighboring park cells
+/*
         datasource = new Datasource(this, "parking_table");
         datasource.open();
         datasource.updateParkCell(x, y - 1, nextNavCellId);
         datasource.updateParkCell(x, y + 1, nextNavCellId);
         datasource.close();
+*/
 
         finish();
     }
