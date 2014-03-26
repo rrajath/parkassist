@@ -38,6 +38,9 @@
         <item>West</item>
         <item>North</item>
         <item>South</item>
+        <item>SouthWest</item>
+        <item>NorthEast</item>
+
     </string-array>
 
     <!--Tables dropdown-->
