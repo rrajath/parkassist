@@ -16,8 +16,8 @@ public class CustomGridViewAdapter extends BaseAdapter {
     private Context context;
     private String[] gridV;
     public CustomGridViewAdapter(Context context,  String[] gridValues) {
-        this.context        = context;
-        this.gridV    =       gridValues ;
+        this.context = context;
+        this.gridV = gridValues ;
     }
 
     @Override
@@ -42,10 +42,8 @@ public class CustomGridViewAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View gridView;
-        if(convertView == null){
-
+        if(convertView == null) {
             gridView = inflater.inflate(R.layout.fingerprintlayout, null);
-
         }
         else {
             gridView = (View) convertView;
@@ -56,6 +54,4 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
         return gridView;
     }
-
-
 }

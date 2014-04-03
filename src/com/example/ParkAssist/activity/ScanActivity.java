@@ -40,34 +40,15 @@ public class ScanActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanbox);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.direction, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                direction = parent.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
         x = bundle.getInt("x");
         y = bundle.getInt("y");
+
+        direction = getDirection(y);
+        TextView tvDirection = (TextView) findViewById(R.id.tvDirection);
+        tvDirection.setText(tvDirection.getText() + " " + direction);
 
         Button bDetails = (Button) findViewById(R.id.btn_Details);
         // Display Details button
@@ -139,6 +120,8 @@ public class ScanActivity extends Activity {
         datasource = new Datasource(this, "fingerprint_table");
         datasource.open();
 
+        int fpCounter = 0;
+
         Datasource navDS = new Datasource(this, "navigation_table");
         navDS.open();
 
@@ -149,23 +132,28 @@ public class ScanActivity extends Activity {
 
         for (Object fingerprint : fpList) {
             Fingerprint fp = (Fingerprint) fingerprint;
-            int fpId = (int) datasource.insertFingerprint(fp);
+            if (fp.getRss() > -90) {
 
-            // Save a record into navigation table
-            NavCell navCell = new NavCell();
-            navCell.setXCord(x);
-            navCell.setYCord(y);
-            navCell.setDirection(direction);
-            navCell.setFpId(fpId);
-            navCell.setNavCellId(nextNavCellId);
+                int fpId = (int) datasource.insertFingerprint(fp);
 
-            datasource.insertNavCell(navCell);
+                // Save a record into navigation table
+                NavCell navCell = new NavCell();
+                navCell.setXCord(x);
+                navCell.setYCord(y);
+                navCell.setDirection(direction);
+                navCell.setFpId(fpId);
+                navCell.setNavCellId(nextNavCellId);
+
+                navDS.insertNavCell(navCell);
+
+                fpCounter++;
+            }
         }
         datasource.close();
         navDS.close();
 
         // Display a notification as to how many fingerprints were stored
-        Toast.makeText(getApplicationContext(), fpList.size() + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), fpCounter + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
 
         // Update neighboring park cells
 /*
@@ -177,6 +165,19 @@ public class ScanActivity extends Activity {
 */
 
         finish();
+    }
+
+    public String getDirection(int y) {
+        switch (y % 12) {
+            case 1:
+            case 4:
+                return "South";
+            case 7:
+            case 10:
+                return "North";
+            default:
+                return null;
+        }
     }
 
     public void discardData(View view) {

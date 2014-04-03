@@ -38,7 +38,7 @@ public class Fingerprint {
     }
 
     public String toString() {
-        return String.valueOf(getFpId() + "   " + ";" + getBssid() + ";" + getSsid() + ";" + getRss() + "    ");
+        return String.valueOf(getFpId() + "    " + ";" + getBssid()/*.substring(9)*/ + ";" + getSsid() + ";" + getRss() + "    ");
     }
 
 }

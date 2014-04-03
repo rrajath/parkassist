@@ -67,7 +67,8 @@ public class ViewDBActivity extends Activity {
             params.gravity = Gravity.CENTER;
             columnHeaders.setLayoutParams(params);
             columnHeaders.setTextColor(Color.BLUE);
-            columnHeaders.setText(String.format("%17s", column));
+//            columnHeaders.setText(String.format("%17s", column));
+            columnHeaders.setText(column);
             headerRow.addView(columnHeaders);
         }
         tableLayout.addView(headerRow);

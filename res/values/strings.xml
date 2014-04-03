@@ -14,7 +14,7 @@
     <string name="cell_details_title">Cell Details?</string>
     <string name="scan_button">Scan</string>
     <string name="stop_button">Stop</string>
-    <string name="direction">Direction ?</string>
+    <string name="direction">Direction:</string>
     <string name="save">Do you want to save?</string>
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
