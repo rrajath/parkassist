@@ -31,6 +31,7 @@
     <string name="details_button">Details</string>
     <string name="tvX">X</string>
     <string name="tvY">Y</string>
+    <string name="export_db_button">Export DB</string>
 
     <!--Direction dropdown-->
     <string-array name="direction">

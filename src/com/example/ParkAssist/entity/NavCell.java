@@ -48,6 +48,6 @@ public class NavCell extends Cell {
     }
 
     public String toString() {
-        return String.valueOf(getNavCellId() + "   " + ";" + getFpId() + ";" + getDirection() + ";" + getXCord() + ";" + getYCord() + "    ");
+        return String.valueOf(getNavCellId() + "    " + ";" + getFpId() + ";" + getDirection() + ";" + getXCord() + ";" + getYCord() + "    ");
     }
 }

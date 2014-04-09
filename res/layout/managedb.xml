@@ -20,6 +20,14 @@
         android:layout_gravity="center_horizontal"
         android:spinnerMode="dropdown"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/export_db_button"
+        android:onClick="exportDB"
+        android:id="@+id/bExportDB"
+        android:layout_gravity="center_horizontal"/>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
                   android:gravity="center"

@@ -3,12 +3,19 @@ package com.example.ParkAssist.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.example.ParkAssist.database.Datasource;
 import com.example.ParkAssist.R;
+import com.example.ParkAssist.database.Datasource;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by rrajath on 3/11/14.
@@ -70,5 +77,37 @@ public class ManageDBActivity extends Activity {
         datasource.refreshDB();
         Toast.makeText(getApplicationContext(), table + " re-created", Toast.LENGTH_LONG).show();
         datasource.close();
+    }
+
+    public void exportDB(View view) {
+        table = spinner.getSelectedItem().toString();
+        String filename = "";
+        try {
+            datasource = new Datasource(this, table);
+            datasource.open();
+            List rows = datasource.getAllRows();
+
+            String path = getApplicationContext().getExternalFilesDir(null).getAbsolutePath();
+
+            String data = "";
+            for (Object row : rows) {
+                String str = row.toString().trim();
+                data += str.replace(";", ",").replace("    ", "") + "\n";
+            }
+
+            filename = path + "/" + table + ".txt";
+            File file = new File(filename);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+            e.printStackTrace();
+        }
+
+        Toast.makeText(getApplicationContext(), table + " exported to " + filename, Toast.LENGTH_LONG).show();
     }
 }
