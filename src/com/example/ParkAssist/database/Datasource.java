@@ -12,6 +12,7 @@ import com.example.ParkAssist.entity.NavCell;
 import com.example.ParkAssist.entity.ParkCell;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -247,5 +248,26 @@ public class Datasource {
         navCell.setYCord(cursor.getInt(4));
 
         return navCell;
+    }
+
+    public HashMap<String, Fingerprint> getFingerprint(int x, int y) {
+        Cursor cursor = db.rawQuery("SELECT bssid FROM fingerprint_table WHERE fp_id IN (SELECT fp_id FROM navigation_table WHERE x_cord = " + x + " AND y_cord = " + y + ");", null);
+        cursor.moveToFirst();
+
+        HashMap<String, Fingerprint> hmFpResult = new HashMap<String, Fingerprint>();
+        while (!cursor.isAfterLast()) {
+            Fingerprint fingerprint = cursorToFingerprint(cursor);
+            hmFpResult.put(cursor.getString(1), fingerprint);
+        }
+        return hmFpResult;
+    }
+
+    public int updateFingerprint(Fingerprint fp) {
+        String table = "fingerprint_table";
+        String whereClause = "fp_id = " + fp.getFpId();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("rss", fp.getRss());
+
+        return db.update(table, contentValues, whereClause, null);
     }
 }

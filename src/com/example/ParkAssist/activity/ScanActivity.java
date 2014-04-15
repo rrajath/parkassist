@@ -79,6 +79,10 @@ public class ScanActivity extends Activity {
                 tvScansCompleted.setText("Scans Completed: " + scanCounter);
 
                 mHandler.postDelayed(this, mInterval);
+
+                if (scanCounter == 40) {
+                    stopUpdates();
+                }
             }
         };
     }
@@ -130,23 +134,43 @@ public class ScanActivity extends Activity {
         nextNavCellId = datasource.getMaxNavCellId();
         nextNavCellId += 1;
 
+        HashMap<String, Fingerprint> hmFingerprint = datasource.getFingerprint(x, y);
         for (Object fingerprint : fpList) {
             Fingerprint fp = (Fingerprint) fingerprint;
+            // if record already exists, take mean rss and update record
+            // else, add new record
             if (fp.getRss() > -90) {
 
-                int fpId = (int) datasource.insertFingerprint(fp);
+                // check for duplicates in hashmap
+                if (hmFingerprint.containsKey(fp.getBssid())) {
+                    // update hashmap
+                    Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
 
-                // Save a record into navigation table
-                NavCell navCell = new NavCell();
-                navCell.setXCord(x);
-                navCell.setYCord(y);
-                navCell.setDirection(direction);
-                navCell.setFpId(fpId);
-                navCell.setNavCellId(nextNavCellId);
+                    // get mean value
+                    int meanRssFromDB = fingerprint1.getRss();
+                    int meanRssFromScan = fp.getRss();
 
-                navDS.insertNavCell(navCell);
+                    // update mean value
+                    int finalMeanValue = (meanRssFromDB + meanRssFromScan) / 2;
+                    fp.setRss(finalMeanValue);
 
-                fpCounter++;
+                    // update database with new rss value
+                    datasource.updateFingerprint(fp);
+                } else {
+                    int fpId = (int) datasource.insertFingerprint(fp);
+
+                    // Save a record into navigation table
+                    NavCell navCell = new NavCell();
+                    navCell.setXCord(x);
+                    navCell.setYCord(y);
+                    navCell.setDirection(direction);
+                    navCell.setFpId(fpId);
+                    navCell.setNavCellId(nextNavCellId);
+
+                    navDS.insertNavCell(navCell);
+
+                    fpCounter++;
+                }
             }
         }
         datasource.close();
