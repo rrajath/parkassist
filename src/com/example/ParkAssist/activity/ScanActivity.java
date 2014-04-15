@@ -201,8 +201,10 @@ public class ScanActivity extends Activity {
         String ssid;
         for(Object aScanResultList: scanResultsList){
             ScanResult scanResult = (ScanResult)aScanResultList;
-            ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + scanResult.level;
-            wifiList.add(ssid);
+            if (scanResult.level > -90) {
+                ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + scanResult.level;
+                wifiList.add(ssid);
+            }
         }
 
         Intent intent = new Intent(ScanActivity.this, ViewActivity.class);
