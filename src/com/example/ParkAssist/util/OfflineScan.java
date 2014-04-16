@@ -33,13 +33,14 @@ public class OfflineScan {
             ScanResult scanResult = (ScanResult) aScanResultsList;
 
             // Add <BSSID|SSID,RSS> to hashmap
+            if(WifiManager.calculateSignalLevel(scanResult.level,100)>24){
             String hFPKey = scanResult.BSSID + "|" + scanResult.SSID;
             int sumRss;
             if (hmFingerprint.get(hFPKey) != null) {
-                sumRss = hmFingerprint.get(hFPKey) + scanResult.level;
+                sumRss = hmFingerprint.get(hFPKey) + WifiManager.calculateSignalLevel(scanResult.level ,100);
                 hmFingerprint.put(hFPKey, sumRss);
             } else {
-                hmFingerprint.put(hFPKey, scanResult.level);
+                hmFingerprint.put(hFPKey, WifiManager.calculateSignalLevel(scanResult.level ,100));
             }
 
             // Check if the value exists in hmScanCounter HashMap
@@ -53,9 +54,9 @@ public class OfflineScan {
             hmScanCounter.put(scanResult.BSSID, counter);
 
         }
-    }
+    }}
 
-    public ArrayList computeMeanRSS() {
+    public ArrayList  computeMeanRSS() {
 
         ArrayList<Fingerprint> fpList = new ArrayList<Fingerprint>();
 

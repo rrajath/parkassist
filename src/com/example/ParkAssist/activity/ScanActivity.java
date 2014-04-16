@@ -141,7 +141,7 @@ public class ScanActivity extends Activity {
             // if record already exists, take mean rss and update record
             // else, add new record
             // check for duplicates in hashmap
-            if (hmFingerprint.containsKey(fp.getBssid()) && fp.getRss() > -90 && hmFingerprint.size() > 0) {
+            if (hmFingerprint.containsKey(fp.getBssid()) &&WifiManager.calculateSignalLevel(fp.getRss(),100) >24  && hmFingerprint.size() > 0) {
                 // update hashmap
                 Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
 
@@ -156,6 +156,7 @@ public class ScanActivity extends Activity {
                 // update database with new rss value
                 datasource.updateFingerprint(fp);
             } else {
+
                 int fpId = (int) datasource.insertFingerprint(fp);
 
                 // Save a record into navigation table
@@ -224,15 +225,17 @@ public class ScanActivity extends Activity {
         wifiManager.startScan();
         scanResultsList = wifiManager.getScanResults();
         ArrayList<String> wifiList = new ArrayList<String>();
+        String str ="";
         String ssid;
         for(Object aScanResultList: scanResultsList){
             ScanResult scanResult = (ScanResult)aScanResultList;
-            if (scanResult.level > -90) {
+             if (WifiManager.calculateSignalLevel(scanResult.level ,100) > 24) {
                 ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + scanResult.level;
                 wifiList.add(ssid);
             }
-        }
 
+        }
+       Toast.makeText(getApplicationContext(),str , Toast.LENGTH_LONG).show();
         Intent intent = new Intent(ScanActivity.this, ViewActivity.class);
 
         intent.putExtra("wifiScanList" , wifiList);
