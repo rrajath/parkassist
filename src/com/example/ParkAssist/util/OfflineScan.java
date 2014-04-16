@@ -2,6 +2,7 @@ package com.example.ParkAssist.util;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.widget.Toast;
 import com.example.ParkAssist.entity.Fingerprint;
 
 import java.util.ArrayList;
@@ -33,7 +34,10 @@ public class OfflineScan {
             ScanResult scanResult = (ScanResult) aScanResultsList;
 
             // Add <BSSID|SSID,RSS> to hashmap
-            if(WifiManager.calculateSignalLevel(scanResult.level,100)>24){
+
+            int level = WifiManager.calculateSignalLevel(scanResult.level,100);
+
+            if(level>24){
             String hFPKey = scanResult.BSSID + "|" + scanResult.SSID;
             int sumRss;
             if (hmFingerprint.get(hFPKey) != null) {

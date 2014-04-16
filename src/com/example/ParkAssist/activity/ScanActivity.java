@@ -31,7 +31,7 @@ public class ScanActivity extends Activity {
     OfflineScan offlineScan = new OfflineScan();
     Runnable statusChecker;
     Datasource datasource;
-    ArrayList fpList;
+    ArrayList  fpList;
     String direction;
     int x;
     int y;
@@ -141,21 +141,25 @@ public class ScanActivity extends Activity {
             // if record already exists, take mean rss and update record
             // else, add new record
             // check for duplicates in hashmap
-            if (hmFingerprint.containsKey(fp.getBssid()) &&WifiManager.calculateSignalLevel(fp.getRss(),100) >24  && hmFingerprint.size() > 0) {
+            //But we first check whether RSS > 24 in scale of 0 to 100
+            int level = WifiManager.calculateSignalLevel(fp.getRss(),100) ;
+            if(WifiManager.calculateSignalLevel(fp.getRss(),100) >24){
+                if (hmFingerprint.containsKey(fp.getBssid())  && hmFingerprint.size() > 0) {
                 // update hashmap
-                Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
+                    Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
 
                 // get mean value
-                int meanRssFromDB = fingerprint1.getRss();
-                int meanRssFromScan = fp.getRss();
+                     int meanRssFromDB = fingerprint1.getRss();
+                     int meanRssFromScan = fp.getRss();
 
                 // update mean value
-                int finalMeanValue = (meanRssFromDB + meanRssFromScan) / 2;
-                fingerprint1.setRss(finalMeanValue);
+                     int finalMeanValue = (meanRssFromDB + meanRssFromScan) / 2;
+                     fingerprint1.setRss(finalMeanValue);
 
                 // update database with new rss value
-                datasource.updateFingerprint(fp);
-            } else {
+                     datasource.updateFingerprint(fp);
+                }
+                else {
 
                 int fpId = (int) datasource.insertFingerprint(fp);
 
@@ -172,7 +176,9 @@ public class ScanActivity extends Activity {
                 fpCounter++;
             }
         }
+        }
         datasource.close();
+
         navDS.close();
 
         // Display a notification as to how many fingerprints were stored
