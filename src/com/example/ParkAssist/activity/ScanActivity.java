@@ -80,8 +80,9 @@ public class ScanActivity extends Activity {
 
                 mHandler.postDelayed(this, mInterval);
 
-                if (scanCounter == 40) {
-                    stopUpdates();
+                if (scanCounter == 10) {
+                    Button bStopScan = (Button)findViewById(R.id.btn_stop);
+                    bStopScan.performClick();
                 }
             }
         };
@@ -139,45 +140,46 @@ public class ScanActivity extends Activity {
             Fingerprint fp = (Fingerprint) fingerprint;
             // if record already exists, take mean rss and update record
             // else, add new record
-            if (fp.getRss() > -90) {
+            // check for duplicates in hashmap
+            if (hmFingerprint.containsKey(fp.getBssid()) && fp.getRss() > -90 && hmFingerprint.size() > 0) {
+                // update hashmap
+                Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
 
-                // check for duplicates in hashmap
-                if (hmFingerprint.containsKey(fp.getBssid())) {
-                    // update hashmap
-                    Fingerprint fingerprint1 = hmFingerprint.get(fp.getBssid());
+                // get mean value
+                int meanRssFromDB = fingerprint1.getRss();
+                int meanRssFromScan = fp.getRss();
 
-                    // get mean value
-                    int meanRssFromDB = fingerprint1.getRss();
-                    int meanRssFromScan = fp.getRss();
+                // update mean value
+                int finalMeanValue = (meanRssFromDB + meanRssFromScan) / 2;
+                fingerprint1.setRss(finalMeanValue);
 
-                    // update mean value
-                    int finalMeanValue = (meanRssFromDB + meanRssFromScan) / 2;
-                    fp.setRss(finalMeanValue);
+                // update database with new rss value
+                datasource.updateFingerprint(fp);
+            } else {
+                int fpId = (int) datasource.insertFingerprint(fp);
 
-                    // update database with new rss value
-                    datasource.updateFingerprint(fp);
-                } else {
-                    int fpId = (int) datasource.insertFingerprint(fp);
+                // Save a record into navigation table
+                NavCell navCell = new NavCell();
+                navCell.setXCord(x);
+                navCell.setYCord(y);
+                navCell.setDirection(direction);
+                navCell.setFpId(fpId);
+                navCell.setNavCellId(nextNavCellId);
 
-                    // Save a record into navigation table
-                    NavCell navCell = new NavCell();
-                    navCell.setXCord(x);
-                    navCell.setYCord(y);
-                    navCell.setDirection(direction);
-                    navCell.setFpId(fpId);
-                    navCell.setNavCellId(nextNavCellId);
+                navDS.insertNavCell(navCell);
 
-                    navDS.insertNavCell(navCell);
-
-                    fpCounter++;
-                }
+                fpCounter++;
             }
         }
         datasource.close();
         navDS.close();
 
         // Display a notification as to how many fingerprints were stored
-        Toast.makeText(getApplicationContext(), fpCounter + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
+        if (fpCounter > 0) {
+            Toast.makeText(getApplicationContext(), fpCounter + " fingerprints saved to DB", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "No new fingerprints", Toast.LENGTH_LONG).show();
+        }
 
         // Update neighboring park cells
 /*

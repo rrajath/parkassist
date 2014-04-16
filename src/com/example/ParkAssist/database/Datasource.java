@@ -251,13 +251,14 @@ public class Datasource {
     }
 
     public HashMap<String, Fingerprint> getFingerprint(int x, int y) {
-        Cursor cursor = db.rawQuery("SELECT bssid FROM fingerprint_table WHERE fp_id IN (SELECT fp_id FROM navigation_table WHERE x_cord = " + x + " AND y_cord = " + y + ");", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM fingerprint_table WHERE fp_id IN (SELECT fp_id FROM navigation_table WHERE x_cord = " + x + " AND y_cord = " + y + ");", null);
         cursor.moveToFirst();
 
         HashMap<String, Fingerprint> hmFpResult = new HashMap<String, Fingerprint>();
         while (!cursor.isAfterLast()) {
             Fingerprint fingerprint = cursorToFingerprint(cursor);
             hmFpResult.put(cursor.getString(1), fingerprint);
+            cursor.moveToNext();
         }
         return hmFpResult;
     }
