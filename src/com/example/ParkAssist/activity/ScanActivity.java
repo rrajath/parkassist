@@ -236,7 +236,7 @@ public class ScanActivity extends Activity {
         for(Object aScanResultList: scanResultsList){
             ScanResult scanResult = (ScanResult)aScanResultList;
              if (WifiManager.calculateSignalLevel(scanResult.level ,100) > 24) {
-                ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + scanResult.level;
+                ssid = scanResult.BSSID + " | " + scanResult.SSID + " | " + WifiManager.calculateSignalLevel(scanResult.level ,100);
                 wifiList.add(ssid);
             }
 
